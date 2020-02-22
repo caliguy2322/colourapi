@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using ColourAPI.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace ColourAPI
 {
@@ -22,17 +24,26 @@ namespace ColourAPI
 
         public IConfiguration Configuration { get; }
 
-        
+
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc(option => option.EnableEndpointRouting = false);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+
+            var server = Configuration["DBServer"] ?? "localhost";
+            var port = Configuration["DBPort"] ?? "1433";
+            var user = Configuration["DBUser"] ?? "SA";
+            var password = Configuration["DBPassword"] ?? "Thingtrax#1";
+            var database = Configuration["Database"] ?? "Colours";
+
+            services.AddDbContext<ColourContext>(options => options.UseSqlServer($"Server={server},{port};Initial Catalog={database};User ID={user};Password={password}"));
+
         }
 
-        
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            
             app.UseMvc();
+            PrepDB.PrepPopulation(app);
         }
     }
 }
