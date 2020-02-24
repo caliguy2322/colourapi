@@ -1,16 +1,21 @@
 version: "3"
 services:
-  ms-sql-server:
+  colour-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      DBServer: "sql_server"
+    ports:
+      - "8080:80"
+    depends_on:
+      - sql_server
+
+  sql_server:
     image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
     environment:
       ACCEPT_EULA: "Y"
-      SA_PASSWORD: "Thingtrax#1"
-      MSSQL_PID: Express
+      SA_PASSWORD: "Pa55w0rd2019"
+      MSSQL_PID: Developer
     ports:
       - "1433:1433"
-  colour-api:
-    build: .
-    environment:
-      DBServer: "ms-sql-server"
-    ports:
-      - "8080:80"

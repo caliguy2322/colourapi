@@ -32,8 +32,8 @@ namespace ColourAPI
 
             var server = Configuration["DBServer"] ?? "localhost";
             var port = Configuration["DBPort"] ?? "1433";
-            var user = Configuration["DBUser"] ?? "SA";
-            var password = Configuration["DBPassword"] ?? "Thingtrax#1";
+            var user = Configuration["DB_USERNAME"] ?? "SA";
+            var password = Configuration["SA_PASSWORD"] ?? "Pa55w0rd2019";
             var database = Configuration["Database"] ?? "Colours";
 
             services.AddDbContext<ColourContext>(options => options.UseSqlServer($"Server={server},{port};Initial Catalog={database};User ID={user};Password={password}"));
