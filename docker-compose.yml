@@ -1,21 +1,27 @@
 version: "3"
 services:
   colour-api:
+    container_name: colour_api
     build:
       context: .
       dockerfile: Dockerfile
-    environment:
-      DBServer: "sql_server"
     ports:
       - "8080:80"
     depends_on:
       - sql_server
-
+    networks:
+      - colour_net
   sql_server:
+    container_name: sql_server
     image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
     environment:
+      MSSQL_PID: "Developer"
       ACCEPT_EULA: "Y"
+      DB_USERNAME: "sa"
       SA_PASSWORD: "Pa55w0rd2019"
-      MSSQL_PID: Developer
     ports:
       - "1433:1433"
+    networks:
+      - colour_net
+networks:
+  colour_net:
