@@ -30,7 +30,7 @@ namespace ColourAPI
             services.AddMvc(option => option.EnableEndpointRouting = false);
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
-            var server = Configuration["DB_HOST"] ?? "localhost";
+            var server = Configuration["DB_HOST"] ?? "sql_server";
             var port = Configuration["DB_PORT"] ?? "1433";
             var user = Configuration["DB_USERNAME"] ?? "SA";
             var password = Configuration["DB_PASSWORD"] ?? "Pa55w0rd2019";
