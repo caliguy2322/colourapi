@@ -2,7 +2,7 @@ version: "3"
 services:
   colour_api:
     container_name: colour_api
-    image: colourapi_colour_api
+    image: colourregistry.azurecr.io/colourapi
     build:
       context: .
       dockerfile: Dockerfile
